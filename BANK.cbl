@@ -452,7 +452,7 @@
            
            *> 用臨時檔案替換原始檔案
            CALL "CBL_RENAME_FILE"
-           USING "TEMP-ACCOUNT.SAM", "ACCOUNT.SAM", 0
+           USING "TEMP-ACCOUNT.SAM", "ACCOUNT.SAM"
            
            *> 記錄交易
            PERFORM 510-RECORD-TRANSACTION
@@ -592,7 +592,7 @@
            
            *> 用臨時檔案替換原始檔案
            CALL "CBL_RENAME_FILE"
-           USING "TEMP-ACCOUNT.SAM", "ACCOUNT.SAM", 0
+           USING "TEMP-ACCOUNT.SAM", "ACCOUNT.SAM"
            
            *> 記錄交易
            PERFORM 610-RECORD-TRANSACTION
@@ -766,7 +766,7 @@
            
            *> 用臨時檔案替換原始檔案
            CALL "CBL_RENAME_FILE"
-           USING "TEMP-ACCOUNT.SAM", "ACCOUNT.SAM", 0
+           USING "TEMP-ACCOUNT.SAM", "ACCOUNT.SAM"
            
            *> 記錄轉帳交易
            PERFORM 710-RECORD-TRANSFER-TRANSACTION
