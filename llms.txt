@@ -1,0 +1,27 @@
+# 銀行管理系統 (COBOL Bank Management System)
+> 一個基於 COBOL 語言與 LINE SEQUENTIAL 循序檔案儲存的簡易銀行帳戶與交易管理系統。
+
+> [!WARNING]
+> 本專案僅作為程式碼寫法範例展示，並未實作任何資料加密或安全防護機制（如身分證字號、電話、帳戶餘額與交易紀錄等均為明文儲存）。請勿直接將本專案套用於實際的生產系統中。
+
+## 核心檔案
+- [BANK.cbl](./BANK.cbl)：主要程式碼檔案，包含系統主選單邏輯、資料讀寫及商務邏輯（客戶新增、開戶、存提款、轉帳、餘額查詢）。
+- [CUSTOMER.SAM](./CUSTOMER.SAM)：客戶資料檔案（Line Sequential 格式）。
+- [ACCOUNT.SAM](./ACCOUNT.SAM)：帳戶與餘額檔案（Line Sequential 格式）。
+- [TRANS.SAM](./TRANS.SAM)：交易明細歷史檔案（Line Sequential 格式）。
+- [docs/data_structures.md](./docs/data_structures.md)：各檔案欄位與資料結構的詳細長度與型態說明。
+- [docs/operation_manual.md](./docs/operation_manual.md)：WSL 環境架設、編譯指令與選單功能操作說明。
+
+## 關鍵技術概念
+
+- **循序檔案處理 (Line Sequential File Processing)**：
+  COBOL 的檔案讀寫方式。透過 `OPEN INPUT`、`OPEN EXTEND`、`OPEN OUTPUT` 等模式來讀取或寫入循序檔案。由於不支援原地更新，修改資料時需採用暫存檔機制。
+
+- **安全檔案更新機制 (Safe File Update)**：
+  在進行存款、提款或轉帳修改餘額時，程式會開啟 [ACCOUNT.SAM](./ACCOUNT.SAM) 讀取，並將更新後的資料寫入臨時檔案 [TEMP-ACCOUNT.SAM](./TEMP-ACCOUNT.SAM)。完成後，透過呼叫 `CBL_RENAME_FILE` 函數以暫存檔覆蓋原檔案，確保檔案寫入時的安全性。
+
+- **交易流水號與 ID 生成**：
+  新客戶 ID、新帳號以及交易 ID 均透過遍歷現有檔案，以 `FUNCTION MAX` 找出最大數值，並 `ADD 1` 生成，確保其唯一性。
+
+- **環形緩衝區 (Ring Buffer) 交易明細查詢**：
+  為了顯示最近 5 筆交易，系統定義了一個長度為 5 的 `OCCURS 5 TIMES` 陣列 `WS-RING-ENTRY`。系統讀取整個交易檔案，利用 `FUNCTION MOD(WS-TRANS-TOTAL - 1, 5) + 1` 將符合目前查詢帳號的紀錄循環填入陣列中。最後，根據交易總數計算出最舊的交易起始格，依時間由舊到新依序輸出，最大化效能與記憶體利用率。
