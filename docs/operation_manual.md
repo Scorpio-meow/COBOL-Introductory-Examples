@@ -1,3 +1,5 @@
+[English](operation_manual.en.md) | [繁體中文](operation_manual.md)
+
 # 銀行管理系統 - 系統操作與編譯指南
 
 本文件說明如何建立執行環境、編譯 COBOL 程式碼以及操作銀行管理系統的各項選單功能，並深入剖析系統內部的核心算法與技術設計。

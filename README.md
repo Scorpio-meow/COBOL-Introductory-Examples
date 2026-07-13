@@ -1,3 +1,5 @@
+[English](README.en.md) | [繁體中文](README.md)
+
 # 銀行管理系統 (COBOL Bank Management System)
 
 本專案是一個基於 COBOL 語言開發的簡易銀行管理系統。系統採用循序檔案（Line Sequential Files）進行資料儲存，提供了客戶資料管理、帳戶開立、存款、提款、轉帳、餘額查詢及最近交易明細等多項功能。

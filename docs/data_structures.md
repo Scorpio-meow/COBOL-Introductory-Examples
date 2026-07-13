@@ -1,3 +1,5 @@
+[English](data_structures.en.md) | [繁體中文](data_structures.md)
+
 # 銀行管理系統 - 資料結構說明文件
 
 本文件詳細說明系統中使用的資料檔案格式與 COBOL 記錄結構（Record Layouts）。系統採用 **Line Sequential** 組織格式，即每行代表一筆紀錄，欄位依固定長度排列，並以換行字元（LF 或 CRLF）作為紀錄分隔符。
